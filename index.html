@@ -1,0 +1,799 @@
+<!DOC<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para o amor da minha vida, Maria ❤️</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fff5f6 0%, #ffe4e6 100%);
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --accent-pink: #f43f5e;
+            --text-main: #3b0764;
+            --text-muted: #6b21a8;
+            --font-size-base: 1.05em;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+            perspective: 2000px;
+        }
+
+        /* PARTÍCULAS DE FUNDO */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 1;
+            background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(254,226,226,0) 70%);
+            border-radius: 50%;
+            animation: floatParticle 8s ease-in-out infinite;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0) scale(0.5); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) translateX(50px) scale(1.2); opacity: 0; }
+        }
+
+        /* TELA DE CARREGAMENTO */
+        #loader-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #ffe4e6 0%, #fecdd3 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999999;
+            transition: all 0.5s ease-in-out;
+            pointer-events: none;
+        }
+
+        .loader-container {
+            text-align: center;
+            width: 80%;
+            max-width: 320px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(244, 63, 94, 0.05);
+        }
+
+        .loader-title {
+            font-size: 1.3em;
+            color: var(--accent-pink);
+            font-weight: 800;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        .loader-status {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-weight: 500;
+            height: 20px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: rgba(244, 63, 94, 0.15);
+            border-radius: 20px;
+            overflow: hidden;
+            padding: 2px;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #f43f5e, #ec4899);
+            border-radius: 20px;
+            transition: width 0.1s ease-out;
+        }
+
+        /* FLOR 3D PAIXÃO */
+        .flower-viewport-3d {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            pointer-events: none;
+            transform-style: preserve-3d;
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .flower-3d-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: globalSpin 32s linear infinite;
+        }
+
+        @keyframes globalSpin {
+            0% { transform: rotateZ(0deg) rotateX(10deg); }
+            100% { transform: rotateZ(360deg) rotateX(10deg); }
+        }
+
+        .petal-3d {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 65px;
+            height: 140px;
+            background: linear-gradient(to bottom, #ffffff 40%, #ffedf0 85%, #ffd1d7 100%);
+            border-radius: 50% 50% 48% 48%;
+            box-shadow: 0 8px 25px rgba(244, 63, 94, 0.08), inset 0 -8px 20px rgba(255, 182, 193, 0.4);
+            transform-origin: center bottom;
+            transform: translate(-50%, -100%) rotateZ(calc(var(--i) * 45deg)) rotateX(16deg) translateZ(2px);
+        }
+
+        .petal-3d:nth-child(1) { --i: 0; }
+        .petal-3d:nth-child(2) { --i: 1; }
+        .petal-3d:nth-child(3) { --i: 2; }
+        .petal-3d:nth-child(4) { --i: 3; }
+        .petal-3d:nth-child(5) { --i: 4; }
+        .petal-3d:nth-child(6) { --i: 5; }
+        .petal-3d:nth-child(7) { --i: 6; }
+        .petal-3d:nth-child(8) { --i: 7; }
+
+        .core-3d {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 52px;
+            height: 52px;
+            background: radial-gradient(circle at 30% 30%, #fef08a, #facc15 60%, #ca8a04 100%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) translateZ(18px);
+            box-shadow: 0 8px 20px rgba(202, 138, 4, 0.45);
+        }
+
+        /* FRASE FLUTUANTE DE CLIQUE */
+        .click-text-love {
+            position: fixed;
+            color: #f43f5e;
+            font-weight: 800;
+            font-size: 1.25em;
+            pointer-events: none;
+            z-index: 999999;
+            white-space: nowrap;
+            text-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+            animation: textRiseUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes textRiseUp {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.7) translateY(0) rotate(-5deg); filter: blur(2px); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(1.2) translateY(-110px) rotate(5deg); }
+        }
+
+        /* TELA DE LOGIN PRIVADA */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #ffe4e6 0%, #fecdd3 100%);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999998;
+        }
+
+        .login-box {
+            background: #ffffff;
+            border: 2px solid #fbcfe8;
+            padding: 45px 35px;
+            border-radius: 36px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(244, 63, 94, 0.12);
+            max-width: 380px;
+            width: 90%;
+            position: relative;
+        }
+
+        .login-box h2 {
+            font-size: 1.6em;
+            margin-bottom: 12px;
+            color: var(--accent-pink);
+            font-weight: 800;
+        }
+
+        .login-box p {
+            color: var(--text-muted);
+            font-size: 0.95em;
+            margin-bottom: 25px;
+        }
+
+        .hint {
+            background: #fff5f6;
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 0.85em;
+            color: var(--accent-pink);
+            margin-bottom: 20px;
+            border: 1px dashed #ffa6b7;
+            font-weight: 700;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 16px;
+            background: #fff8f9;
+            border: 2px solid #fbcfe8;
+            border-radius: 18px;
+            color: var(--accent-pink);
+            font-size: 1.15em;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            user-select: text;
+        }
+
+        .password-input:focus {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.2);
+            background: #fff;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #f43f5e, #ec4899);
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 18px;
+            font-weight: 800;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(244, 63, 94, 0.25);
+            margin-top: 20px;
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 0.85em;
+            margin-top: 12px;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* PAINEL DE CONTEÚDO PRINCIPAL */
+        #main-content {
+            opacity: 0;
+            transform: translateY(60px) scale(0.98);
+            max-width: 660px;
+            width: 100%;
+            transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: none;
+            margin: 50px 0;
+            z-index: 5;
+        }
+
+        .main-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            padding: 35px 25px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(244, 63, 94, 0.05);
+        }
+
+        /* 👑 PAINEL NA LATERAL DA TELA */
+        .config-sidebar {
+            position: fixed;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(244, 63, 94, 0.3);
+            padding: 15px 10px;
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(244, 63, 94, 0.1);
+            z-index: 99999;
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loaded ~ .config-sidebar,
+        .config-sidebar.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .config-btn {
+            background: #ffffff;
+            border: 1px solid #fbcfe8;
+            padding: 12px;
+            border-radius: 16px;
+            font-size: 0.85em;
+            font-weight: 700;
+            color: var(--accent-pink);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            width: 75px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .config-btn span {
+            font-size: 0.75em;
+            font-weight: 600;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 65px;
+        }
+
+        .config-btn:hover {
+            background: var(--accent-pink);
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        /* ESTILO DOS TEXTOS */
+        .animated-p {
+            margin-bottom: 24px;
+            font-size: var(--font-size-base);
+            line-height: 1.85;
+            opacity: 0;
+            transform: translateY(20px);
+            filter: blur(4px);
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1), font-size 0.3s ease;
+        }
+
+        .loaded .animated-p {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .typewriter-text {
+            color: #db2777;
+            font-weight: 700;
+            font-size: calc(var(--font-size-base) * 1.05);
+            border-left: 4px solid #db2777;
+            padding-left: 18px;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            transition: font-size 0.3s ease;
+        }
+
+        .reveal-box {
+            color: #10b981;
+            font-weight: 800;
+            font-size: calc(var(--font-size-base) * 1.2);
+            text-align: center;
+            margin: 35px 0;
+            padding: 18px;
+            background: rgba(16, 185, 129, 0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            opacity: 0;
+            transform: scale(0.9);
+            filter: blur(2px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), font-size 0.3s ease;
+        }
+
+        .loaded .reveal-box {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0);
+            transition-delay: 0.3s;
+        }
+
+        .highlight-glow {
+            background: linear-gradient(120deg, rgba(244,63,94,0.15) 0%, rgba(244,63,94,0.25) 100%);
+            padding: 2px 6px;
+            border-radius: 6px;
+            color: #e11d48;
+            font-weight: 700;
+        }
+
+        .acrostico {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 24px;
+            margin-top: 45px;
+            border: 2px dashed var(--accent-pink);
+            animation: pulseBorder 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseBorder {
+            0%, 100% { border-color: rgba(244, 63, 94, 0.4); }
+            50% { border-color: rgba(244, 63, 94, 1); }
+        }
+
+        .letter {
+            color: var(--accent-pink);
+            font-size: 1.45em;
+            font-weight: 900;
+            display: inline-block;
+            width: 28px;
+        }
+
+        .line {
+            margin-bottom: 18px;
+            font-size: 0.98em;
+            line-height: 1.6;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        /* RESPONSIVIDADE PARA CELULARES */
+        @media (max-width: 768px) {
+            .config-sidebar {
+                right: 50%;
+                top: auto;
+                bottom: 15px;
+                transform: translateX(50%);
+                flex-direction: row;
+                padding: 10px;
+                border-radius: 20px;
+                width: 90%;
+                justify-content: space-around;
+            }
+            .config-btn {
+                width: auto;
+                flex: 1;
+                padding: 8px;
+            }
+            #main-content {
+                margin-bottom: 120px;
+            }
+        }
+
+        /* DELAYS EM CASCATA */
+        .animated-p:nth-child(2) { transition-delay: 0.4s; }
+        .animated-p:nth-child(3) { transition-delay: 0.6s; }
+        .animated-p:nth-child(4) { transition-delay: 0.8s; }
+        .animated-p:nth-child(5) { transition-delay: 1.0s; }
+        .animated-p:nth-child(6) { transition-delay: 1.2s; }
+        .animated-p:nth-child(7) { transition-delay: 1.4s; }
+        .animated-p:nth-child(8) { transition-delay: 1.6s; }
+        .animated-p:nth-child(9) { transition-delay: 1.8s; }
+        .animated-p:nth-child(10) { transition-delay: 2.0s; }
+        .animated-p:nth-child(11) { transition-delay: 2.2s; }
+        .animated-p:nth-child(12) { transition-delay: 2.4s; }
+        .animated-p:nth-child(13) { transition-delay: 2.6s; }
+        .animated-p:nth-child(14) { transition-delay: 2.8s; }
+        .animated-p:nth-child(15) { transition-delay: 3.0s; }
+        .animated-p:nth-child(16) { transition-delay: 3.2s; }
+    </style>
+</head>
+<body>
+
+<!-- ELEMENTO DE ÁUDIO REAL DE FUNDO -->
+<audio id="bg-audio" loop></audio>
+
+<!-- GERADOR DE PARTÍCULAS EM BACKGROUND -->
+<script>
+    for (let i = 0; i < 15; i++) {
+        let p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.width = p.style.height = Math.random() * 30 + 10 + 'px';
+        p.style.animationDelay = Math.random() * 6 + 's';
+        p.style.animationDuration = Math.random() * 5 + 6 + 's';
+        document.body.appendChild(p);
+    }
+</script>
+
+<!-- TELA DE CARREGAMENTO -->
+<div id="loader-screen">
+    <div class="loader-container">
+        <div class="loader-title">SISTEMA AMOROSO</div>
+        <div class="loader-status" id="load-txt">Conectando memórias...</div>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="load-bar"></div>
+        </div>
+    </div>
+</div>
+
+<!-- FLOR TRIDIMENSIONAL -->
+<div class="flower-viewport-3d" id="flowerViewport">
+    <div class="flower-3d-wrapper">
+        <div class="petal-3d"></div>
+        <div class="petal-3d"></div>
+        <div class="petal-3d"></div>
+        <div class="petal-3d"></div>
+        <div class="petal-3d"></div>
+        <div class="petal-3d"></div>
+        <div class="petal-3d"></div>
+        <div class="petal-3d"></div>
+        <div class="core-3d"></div>
+    </div>
+</div>
+
+<!-- TELA DE LOGIN PRIVADA -->
+<div id="login-screen">
+    <div class="login-box">
+        <h2>Área Restrita 🌸</h2>
+        <p>Insira nossa credencial secreta</p>
+        <div class="hint">Dica: A senha secreta é 3009M+V 💕</div>
+        <div class="input-group">
+            <input type="text" id="password" class="password-input" placeholder="Toque aqui para digitar..." autocomplete="off">
+            <div id="error-txt" class="error-message">Senha incorreta, tenta de novo amor! ⛔</div>
+        </div>
+        <button class="login-btn" onclick="checkPassword()">Acessar Ambiente ❤️</button>
+    </div>
+</div>
+
+<!-- BARRA LATERAL FIXA DE CONFIGURAÇÕES -->
+<div class="config-sidebar" id="sidebar">
+    <button class="config-btn" onclick="toggleTheme()">🎨 <span>Tema</span></button>
+    <button class="config-btn" onclick="changeFontSize()">🔍 <span>Fonte</span></button>
+    <button class="config-btn" onclick="playMusic()">🎵 <span id="music-name">Play</span></button>
+</div>
+
+<!-- PAINEL DO TEXTO PRINCIPAL -->
+<div id="main-content">
+    <div class="main-card">
+        
+        <div class="typewriter-text" id="initial-drama">
+            Maria, namoral, a gente precisa conversar sério. Papo reto mesmo. Eu cansei de fingir que tá tudo bem quando não tá. A gente já tinha conversado sobre isso antes e você simplesmente finge que não lembra ou finge que não é contigo. Eu não vou ficar me desgastando num relacionamento onde parece que só eu me importo com os detalhes, de verdade. Não dá mais para aguentar essa tua postura de achar que tudo é drama meu...
+        </div>
+
+        <div class="reveal-box" id="joke-reveal">
+            Brincadeira kkkkkkkkkkk mds, desculpa, quase te matei do coração né? Te peguei total! 😂❤️
+        </div>
+
+        <p class="animated-p">Olha, agr falando sério... era para eu ter te mandado isso ontem, então me desculpa de verdade pelo atraso. Eu cheguei a fazer ontem de noite, mas acabei indo dormir e depois até acordei no meio da noite para refazer e deixar ainda melhor, só que na correria eu esqueci de mandar. Desculpa msm, de verdade!</p>
+
+        <p class="animated-p">But bom, falando de coração aberto... Eu nunca fiz nada planejado assim para aniversário de namoro, então pfv me perdoa se eu fizer ou falar algo errado. Sou meio lerdo com essas coisas de romantismo, vc sabe, mas tudo que faço por vc é puro e por amor.</p>
+
+        <p class="animated-p">Queria te pedir desculpa por não confiar em vc ou na sua palavra às vezes. Eu sei que vacilo nisso. É que, mano, eu tenho tanto ciúmes de vc que meu cérebro vira uma máquina de criar paranoia. Eu começo a imaginar um monte de coisa na minha cabeça, mas ó... pior que na maioria das vezes eu acabo estando certo kkkkk de verdade, a maioria sim, então não me julga tanto! Mas msm assim, desculpa por pirar demais às vezes, eu sei que às vezes cansa.</p>
+
+        <p class="animated-p">Mas bom, esquece isso tudo agr. O foco hoje é outro. <span class="highlight-glow">Feliz aniversário de namoro, minha linda!</span> Eu te amo dms, vc não tem nem noção do tamanho disso. Vc simplesmente não sai da minha cabeça por um segundo sequer. É bizarro o quanto eu passo o dia todo pensando em vc, lembrando do teu sorriso, do teu cheiro, do teu jeito bobo de rir... Eu lembro de vc até na hora de dormir, vc é literalmente o meu último pensamento do dia e o primeiro quando eu acordo.</p>
+
+        <p class="animated-p">Fico deitado na cama olhando pro teto e lembrando das nossas conversas, das nossas piadas internas que só a gente entende, e de como a vida ficou mto mais leve desde que vc chegou. Olha para trás e vê tudo que a gente já passou até aqui. Cada momento do teu lado parece que ganha mais cor, sabe? É mto louco pensar em como a gente se encaixou tão bem msm sendo tão diferentes em algumas coisas.</p>
+
+        <p class="animated-p">Vc me aguenta nos meus piores dias, quando tô chato, surtado ou cheio de ciúmes bobo, e msm assim vc continua aqui, segurando a minha mão. Isso não tem preço pro mundo. Vc é a minha calmaria no meio do caos, e por mais que eu seja meio cabeça dura e ciumento, meu objetivo principal é sempre te ver feliz e te fazer a mulher mais amada desse mundo.</p>
+
+        <p class="animated-p">Queria que a gente comemore essa data hoje e muitas outras que ainda estão por vir, ano após ano. Quero evoluir contigo, aprender a controlar meus medos, minhas insecurities e te dar toda a segurança que vc merece. Obrigado por ser minha namorada, minha parceria de vida, minha melhor amiga e o meu porto seguro. Obrigado por não desistir de mim msm quando eu sou a pessoa mais difícil de lidar. Prometo que vou me esforçar cada dia mais por nós dois.</p>
+
+        <p class="animated-p">Eu amo quando vc me manda mensagem do nada, amo quando vc me liga só pra ouvir minha voz e amo até quando a gente briga por bobeira e dps faz as pazes rindo. Vc mudou a minha rotina, mudou a minha cabeça e mudou o meu conceito de amor. Eu nunca achei que fosse gostar tanto de alguém como gosto de vc.</p>
+
+        <p class="animated-p">Cada detalhe teu me encanta, desde o jeito que vc arruma o cabelo até quando vc tá brava comigo. Hj o dia é nosso, mas o presente com certeza é meu por ter vc comigo todos os dias da minha vida. Que o nosso amor continue forte, blindado e cheio de momentos bons. Quero viver uma vida inteira de histórias do teu lado.</p>
+
+        <p class="animated-p">Sei que não sou perfeito, que erro, que tenho meus momentos de surto, mas saiba que meu foco é sempre fazer dar certo. Nunca duvide do meu amor por vc. Quando eu falo que te amo, não é por força do hábito. É pq cada célula do meu corpo sente isso de verdade. Vc é meu porto seguro.</p>
+
+        <p class="animated-p">Penso no nosso futuro mto mais do que vc imagina. Me vejo velhinho do teu lado. O mundo pode tá desabando lá fora, mas se eu tiver o teu abraço e o teu apoio, eu sinto que posso vencer qualquer barreira. Vc é a minha força. Obrigado por aceitar meus defeitos, por rir das minhas bobeiras e por me dar colo quando as coisas ficam difíceis pra mim. Vc é incrível.</p>
+
+        <p class="animated-p">Nossos momentos juntos são os melhores da minha semana. O tempo voa quando tô contigo e demora uma eternidade pra passar quando tamo longe. Espero que esse texto consiga expressar pelo menos um pouco do que eu sinto, pq a verdade é que não existem palavras suficientes no dicionário pra te explicar.</p>
+
+        <p class="animated-p">Vc merece o mundo, Maria. E se depender de mim, eu vou fazer de tudo pra colocar o mundo inteiro nos teus pés. Vc é a dona do meu coração. Obrigado por cada abraço apertado, por cada beijo que cura qualquer dia ruim, por cada "eu te amo" trocado de madrugada. Vc é perfeita pra mim.</p>
+
+        <p class="animated-p">Meu coração é totalmente teu, Maria. Nunca duvide disso, nem por um segundo. Ele bate no ritmo do teu nome desde que te conheci. Parabéns para nós dois por termos chegado até aqui com tanta cumplicidade e amor. Que venham os próximos meses, anos e décadas.</p>
+
+        <p class="animated-p"><span class="highlight-glow">Te amo hoje, amanhã, depois e para todo o sempre.</span> Vc é a minha vida todinha, minha gata maravilhosa. Feliz aniversário de namoro!</p>
+
+        <!-- ACRÓSTICO -->
+        <div class="acrostico animated-p">
+            <p style="font-weight: 700; margin-bottom: 15px; color: var(--text-main);">Grava bem isso no teu coração:</p>
+            <div class="line"><span class="letter">M</span>eu amor por vc é gigante, por isso <strong>EU TE AMO</strong> com todas as minhas forças e com toda a minha alma.</div>
+            <div class="line"><span class="letter">A</span> vida ficou mto mais linda com vc do meu lado, por isso <strong>EU TE AMO</strong> e quero construir meu futuro ctg.</div>
+            <div class="line"><span class="letter">R</span>azão dos meus melhores sorrisos e dos meus pensamentos diários, <strong>EU TE AMO</strong> mto msm.</div>
+            <div class="line"><span class="letter">I</span>ntensa, perfeita e única na minha vida, nunca se esqueça que <strong>EU TE AMO</strong> mais que tudo.</div>
+            <div class="line"><span class="letter">A</span>mor da minha vida todinha, pra sempre e de verdade, <strong>EU TE AMO</strong> daqui até o infinito! ❤️✨</div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let isUnlocked = false;
+    let currentTheme = 'pink';
+    let fontSizeState = 0; 
+    let currenttrack = 0;
+
+    // BANCO DE TRILHAS ATUALIZADO COM LINKS ULTRA ESTÁVEIS DO ARCHIVE.ORG (PIANO E RELAX)
+    const tracks = [
+        { name: "Romance", url: "https://archive.org/download/classicmp3collection/Beethoven%27s%20Silence.mp3" }, 
+        { name: "Piano Soft", url: "https://archive.org/download/classicmp3collection/Mariage%20D%27amour.mp3" },
+        { name: "Sweet Vibe", url: "https://archive.org/download/classicmp3collection/River%20Flows%20In%20You.mp3" }
+    ];
+
+    const audioPlayer = document.getElementById('bg-audio');
+
+    // CARREGAMENTO DO SISTEMA
+    window.addEventListener('DOMContentLoaded', () => {
+        const loaderScreen = document.getElementById('loader-screen');
+        const loginScreen = document.getElementById('login-screen');
+        const loadBar = document.getElementById('load-bar');
+        const loadTxt = document.getElementById('load-txt');
+        const passwordInput = document.getElementById('password');
+        
+        const logs = [
+            { p: 30, t: "Carregando memórias..." },
+            { p: 70, t: "Alinhando estrelas no céu..." },
+            { p: 100, t: "Pronto! ❤️" }
+        ];
+
+        let index = 0;
+        const cron = setInterval(() => {
+            if(index < logs.length) {
+                loadBar.style.width = logs[index].p + "%";
+                loadTxt.innerText = logs[index].t;
+                index++;
+            } else {
+                clearInterval(cron);
+                setTimeout(() => {
+                    loaderScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loaderScreen.style.display = 'none';
+                        loginScreen.style.display = 'flex';
+                        passwordInput.focus();
+                    }, 500);
+                }, 400);
+            }
+        }, 300);
+    });
+
+    // MOVIMENTAÇÃO DA FLOR 3D
+    const viewPort = document.getElementById('flowerViewport');
+    window.addEventListener('mousemove', (e) => {
+        const xAxis = (window.innerWidth / 2 - e.clientX) / 20;
+        const yAxis = (window.innerHeight / 2 - e.clientY) / 20;
+        viewPort.style.transform = `translate(-50%, -50%) rotateY(${-xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+
+    // VALIDAR LOGIN E LIBERAR INTERATIVIDADES
+    function checkPassword() {
+        const passwordInput = document.getElementById('password').value.trim();
+        const loginScreen = document.getElementById('login-screen');
+        const mainContent = document.getElementById('main-content');
+        const sidebar = document.getElementById('sidebar');
+        const errorTxt = document.getElementById('error-txt');
+
+        if(passwordInput === '3009M+V') { 
+            isUnlocked = true;
+            loginScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                loginScreen.style.display = 'none';
+                mainContent.style.display = 'block';
+                sidebar.classList.add('visible'); 
+                
+                // Pré-carrega a trilha estável inicial
+                audioPlayer.src = tracks[0].url;
+                audioPlayer.load();
+                
+                // Tenta tocar (navegadores podem barrar autoplay sem clique prévio)
+                audioPlayer.play().then(() => {
+                    document.getElementById('music-name').innerText = tracks[0].name;
+                }).catch(err => {
+                    document.getElementById('music-name').innerText = "Tocar 🎵";
+                });
+
+                setTimeout(() => {
+                    mainContent.style.opacity = '1';
+                    mainContent.style.transform = 'translateY(0) scale(1)';
+                    document.body.classList.add('loaded');
+                }, 50);
+            }, 500);
+        } else {
+            errorTxt.style.display = 'block';
+            const box = document.querySelector('.login-box');
+            box.style.animation = 'none';
+            setTimeout(() => { box.style.animation = 'shake 0.4s ease-in-out'; }, 10);
+        }
+    }
+
+    document.getElementById('password').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') checkPassword();
+    });
+
+    // FRASE EM QUALQUER LUGAR
+    window.addEventListener('click', (e) => {
+        if (!isUnlocked) return; 
+
+        const love = document.createElement('div');
+        love.className = 'click-text-love';
+        love.innerHTML = 'Eu te amo demais ❤️';
+        love.style.left = e.clientX + 'px';
+        love.style.top = e.clientY + 'px';
+        
+        document.body.appendChild(love);
+        setTimeout(() => love.remove(), 1400);
+    });
+
+    // MUDAR TEMAS
+    function toggleTheme() {
+        const root = document.documentElement;
+        if(currentTheme === 'pink') {
+            root.style.setProperty('--bg-gradient', 'linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%)'); 
+            root.style.setProperty('--accent-pink', '#7c3aed');
+            currentTheme = 'purple';
+        } else if(currentTheme === 'purple') {
+            root.style.setProperty('--bg-gradient', 'linear-gradient(135deg, #ecfeff 0%, #cffafe 100%)'); 
+            root.style.setProperty('--accent-pink', '#0891b2');
+            currentTheme = 'blue';
+        } else {
+            root.style.setProperty('--bg-gradient', 'linear-gradient(135deg, #fff5f6 0%, #ffe4e6 100%)'); 
+            root.style.setProperty('--accent-pink', '#f43f5e');
+            currentTheme = 'pink';
+        }
+    }
+
+    // AUMENTAR TAMANHO DO TEXTO
+    function changeFontSize() {
+        const root = document.documentElement;
+        if(fontSizeState === 0) {
+            root.style.setProperty('--font-size-base', '1.25em');
+            fontSizeState = 1;
+        } else if(fontSizeState === 1) {
+            root.style.setProperty('--font-size-base', '1.45em');
+            fontSizeState = 2;
+        } else {
+            root.style.setProperty('--font-size-base', '1.05em');
+            fontSizeState = 0;
+        }
+    }
+
+    // TOCAR / TROCAR MÚSICA DE VERDADE
+    function playMusic() {
+        if (!audioPlayer.src || audioPlayer.error) {
+            audioPlayer.src = tracks[currenttrack].url;
+            audioPlayer.load();
+        }
+
+        if (audioPlayer.paused) {
+            audioPlayer.play().then(() => {
+                document.getElementById('music-name').innerText = tracks[currenttrack].name;
+            }).catch(e => console.error("Erro ao dar play:", e));
+        } else {
+            currenttrack = (currenttrack + 1) % tracks.length;
+            audioPlayer.src = tracks[currenttrack].url;
+            audioPlayer.load();
+            audioPlayer.play().then(() => {
+                document.getElementById('music-name').innerText = tracks[currenttrack].name;
+            }).catch(e => console.error("Erro ao mudar música:", e));
+        }
+    }
+</script>
+
+</body>
+</html>
